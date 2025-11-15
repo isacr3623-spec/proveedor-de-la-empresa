@@ -1,0 +1,128 @@
+import tkinter as tk
+
+# --- Funciones para cambiar el contenido central ---
+def mostrar_inicio():
+    limpiar_centro()
+    tk.Label(frame_central, text="--- Ventana de Inicio ---", font=("Arial", 12, "bold"), bg="white").pack(pady=10)
+    tk.Label(frame_central, text="MISIÓN:", font=("Arial", 10, "bold"), bg="white").pack()
+    tk.Label(frame_central, text="Diseñar, fabricar y distribuir piezas de alta calidad.", bg="white").pack()
+    tk.Label(frame_central, text="VISIÓN:", font=("Arial", 10, "bold"), bg="white").pack(pady=10)
+    tk.Label(frame_central, text="Ser líderes en la industria de refacciones del ciclismo.", bg="white").pack()
+    tk.Button(frame_central, text="Siguiente", command=mostrar_login, bg="#e0e0e0").pack(pady=20)
+
+def mostrar_login():
+    limpiar_centro()
+    tk.Label(frame_central, text="--- Iniciar Sesión ---", font=("Arial", 12, "bold"), bg="white").pack(pady=10)
+
+    # Nuevo: nombre del proveedor
+    tk.Label(frame_central, text="Nombre del proveedor:", bg="white").pack()
+    nombre_entry = tk.Entry(frame_central, width=30)
+    nombre_entry.pack()
+
+    tk.Label(frame_central, text="Correo electrónico:", bg="white").pack()
+    correo_entry = tk.Entry(frame_central, width=30)
+    correo_entry.pack()
+
+    tk.Label(frame_central, text="Contraseña:", bg="white").pack()
+    password_entry = tk.Entry(frame_central, width=30, show="*")
+    password_entry.pack()
+
+    def validar_login():
+        nombre = nombre_entry.get()
+        correo = correo_entry.get()
+        password = password_entry.get()
+
+        if correo == "proveedor1@gmail.com" and password == "1234":
+            if nombre.strip() == "":
+                nombre = "Proveedor"
+            mostrar_panel_proveedor(nombre)
+        else:
+            tk.Label(frame_central, text="⚠️ Datos incorrectos", fg="red", bg="white").pack(pady=5)
+
+    tk.Button(frame_central, text="Iniciar", command=validar_login, bg="#e0e0e0").pack(pady=20)
+    tk.Button(frame_central, text="Volver", command=mostrar_inicio, bg="#e0e0e0").pack()
+
+# --- PANEL DEL PROVEEDOR (sin botones) ---
+def mostrar_panel_proveedor(nombre_usuario):
+    limpiar_centro()
+
+    tk.Label(frame_central, text=f"Bienvenido, {nombre_usuario}",
+             font=("Arial", 18, "bold"), bg="white").pack(pady=20)
+
+    tk.Label(frame_central, text="Panel del Proveedor",
+             font=("Arial", 13), bg="white").pack(pady=5)
+
+    tk.Label(frame_central, text="ID: PR-2045", font=("Arial", 11), bg="white").pack(pady=5)
+    tk.Label(frame_central, text="Estado: Activo", font=("Arial", 11), bg="white").pack(pady=5)
+
+    tk.Label(frame_central, text="Pedidos pendientes: 3", font=("Arial", 11), bg="white").pack(pady=10)
+    tk.Label(frame_central, text="Órdenes de compra activas: 2", font=("Arial", 11), bg="white").pack(pady=5)
+
+    tk.Label(frame_central, text="Gracias por ser parte de SalasRefaction",
+             font=("Arial", 10, "italic"), bg="white", fg="#444").pack(pady=20)
+
+def limpiar_centro():
+    for widget in frame_central.winfo_children():
+        widget.destroy()
+
+# --------------------------------------------------------------------
+# ---------------------- INTERFAZ PRINCIPAL ---------------------------
+# --------------------------------------------------------------------
+
+ventana = tk.Tk()
+ventana.title("SalasRefaction")
+ventana.geometry("750x450")
+ventana.configure(bg="white")
+
+# -------------------- ENCABEZADO ORIGINAL ---------------------------
+frame_superior = tk.Frame(ventana, bg="#f2f2f2", height=60)
+frame_superior.pack(fill="x", side="top")
+
+tk.Label(
+    frame_superior,
+    text="SR",
+    font=("Arial Black", 18),
+    bg="gray",
+    fg="white",
+    width=3,
+    height=1
+).place(x=10, y=7)
+
+tk.Label(
+    frame_superior,
+    text="SalasRefaction",
+    font=("Segoe UI Black", 20, "bold"),
+    bg="#f2f2f2",
+    fg="#1a1a1a"
+).place(x=70, y=4)
+
+tk.Label(
+    frame_superior,
+    text="Sonrisas por nuestra calidad y seguridad",
+    font=("Segoe UI", 11, "italic"),
+    bg="#f2f2f2",
+    fg="#444"
+).place(x=75, y=38)
+
+tk.Frame(ventana, bg="black", height=2).pack(fill="x")
+
+# Contenedor central
+frame_central = tk.Frame(ventana, bg="white")
+frame_central.pack(fill="both", expand=True)
+
+# -------------------- PIE DE PÁGINA ORIGINAL ------------------------
+tk.Frame(ventana, bg="black", height=2).pack(fill="x", side="bottom")
+
+frame_inferior = tk.Frame(ventana, bg="white", height=40)
+frame_inferior.pack(fill="x", side="bottom")
+
+tk.Label(frame_inferior, text="© 2025 .SalasRefaction", font=("Arial", 10), bg="white").place(x=20, y=10)
+
+tk.Button(frame_inferior, text="f", bg="#1877f2", fg="white", width=2, height=1, relief="flat").place(x=640, y=5)
+tk.Button(frame_inferior, text="◎", bg="#E1306C", fg="white", width=2, height=1, relief="flat").place(x=680, y=5)
+tk.Button(frame_inferior, text="☏", bg="#25D366", fg="white", width=2, height=1, relief="flat").place(x=720, y=5)
+
+# Mostrar pantalla inicial
+mostrar_inicio()
+
+ventana.mainloop()
